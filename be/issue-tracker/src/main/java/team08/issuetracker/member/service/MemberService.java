@@ -3,7 +3,7 @@ package team08.issuetracker.member.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import team08.issuetracker.exception.user.InvalidRegisterFormException;
+import team08.issuetracker.exception.member.InvalidRegisterFormException;
 import team08.issuetracker.member.model.Member;
 import team08.issuetracker.member.model.dto.MemberCreationDto;
 import team08.issuetracker.member.repository.MemberRepository;
@@ -27,6 +27,8 @@ public class MemberService {
         Member member = new Member(memberCreationDto.getMemberId(), memberCreationDto.getPassword());
 
         memberRepository.save(member);
+
+        log.info("회원가입 성공! 아이디 : {}", member.getMemberId());
     }
 
     private void validateRegisterForm(MemberCreationDto memberCreationDto) {

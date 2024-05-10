@@ -8,14 +8,9 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Setter
-@Table("MEMBER")
 public class Member {
-    @Id
-    @Column("member_id")
-    private String memberId;
-
-    @Column("password")
-    private String password;
+    private final String memberId;
+    private final String password;
 
     public Member(String memberId, String password) {
         this.memberId = memberId;

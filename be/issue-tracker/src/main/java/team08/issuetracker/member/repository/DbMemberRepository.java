@@ -14,6 +14,7 @@ public class DbMemberRepository implements MemberRepository {
     @Override
     public void save(Member member) {
         String sql = "INSERT INTO MEMBER (member_id, password) VALUES (?, ?)";
+
         jdbcTemplate.update(sql, member.getMemberId(), member.getPassword());
     }
 }
