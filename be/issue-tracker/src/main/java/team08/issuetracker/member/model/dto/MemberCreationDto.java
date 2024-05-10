@@ -1,4 +1,4 @@
-package team08.issuetracker.user.model.dto;
+package team08.issuetracker.member.model.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 @Getter @Setter
-public class UserCreationDto {
-    private String userId;
+public class MemberCreationDto {
+    private String memberId;
     private String password;
 }

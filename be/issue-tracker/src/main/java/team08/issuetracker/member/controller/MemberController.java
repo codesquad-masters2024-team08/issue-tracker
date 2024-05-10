@@ -1,4 +1,4 @@
-package team08.issuetracker.user.controller;
+package team08.issuetracker.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,21 +7,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team08.issuetracker.user.model.dto.UserCreationDto;
-import team08.issuetracker.user.service.UserService;
+import team08.issuetracker.member.model.dto.MemberCreationDto;
+import team08.issuetracker.member.service.MemberService;
 
 @RestController
 @Slf4j
-@RequestMapping("/user")
+@RequestMapping("/member")
 @RequiredArgsConstructor
-public class UserController {
-    private final UserService userService;
+public class MemberController {
+    private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody UserCreationDto userCreationDto) {
-        log.info("signup {}{}", userCreationDto.getUserId(), userCreationDto.getPassword());
-
-        userService.registerUser(userCreationDto);
+    public ResponseEntity<String> registerUser(@RequestBody MemberCreationDto memberCreationDto) {
+        memberService.registerUser(memberCreationDto);
 
         return ResponseEntity.ok("회원가입 성공!");
     }
