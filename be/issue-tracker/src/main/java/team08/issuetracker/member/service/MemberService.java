@@ -21,7 +21,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void registerUser(MemberCreationDto memberCreationDto) {
+    public void registerMember(MemberCreationDto memberCreationDto) {
         validateRegisterForm(memberCreationDto);
 
         Member member = new Member(memberCreationDto.getMemberId(), memberCreationDto.getPassword());

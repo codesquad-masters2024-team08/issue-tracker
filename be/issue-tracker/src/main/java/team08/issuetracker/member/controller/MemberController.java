@@ -16,8 +16,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody MemberCreationDto memberCreationDto) {
-        memberService.registerUser(memberCreationDto);
+    public ResponseEntity<String> registerMember(@RequestBody MemberCreationDto memberCreationDto) {
+        memberService.registerMember(memberCreationDto);
 
         return ResponseEntity.ok("회원가입 성공!");
     }
