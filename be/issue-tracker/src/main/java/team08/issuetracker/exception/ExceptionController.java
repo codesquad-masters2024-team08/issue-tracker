@@ -11,6 +11,7 @@ import team08.issuetracker.exception.member.InvalidRegisterFormException;
 import team08.issuetracker.exception.member.MemberNotFoundException;
 import team08.issuetracker.exception.member.MemberPasswordMismatchException;
 import team08.issuetracker.exception.milestone.InvalidMilestoneFormException;
+import team08.issuetracker.exception.milestone.MilestoneNotFoundException;
 
 @ControllerAdvice
 @Slf4j
@@ -45,8 +46,16 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error_msg);
     }
 
+    @ExceptionHandler(MilestoneNotFoundException.class)
+    public ResponseEntity<String> handleMilestoneNotFoundException(MilestoneNotFoundException e) {
+        error_msg = "해당하는 id의 마일스톤을 찾을 수 없습니다.";
+        log.error(e.getClass().getSimpleName() + " : " + error_msg);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error_msg);
+    }
+
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException e) {
+
         error_msg = "이미 존재하는 ID로는 회원가입 할 수 없습니다.";
         log.error(e.getClass().getSimpleName() + " : " + error_msg);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error_msg);
