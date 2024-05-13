@@ -52,9 +52,11 @@ public class MemberController {
 
     @GetMapping("/validate")
     public ResponseEntity<?> validateToken(@CookieValue(name = "jwt-token") String jwtToken) {
-        jwtService.parseJwtToken(jwtToken);
+        if (!jwtService.parseJwtToken(jwtToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 토큰");
+        }
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("검증 성공");
     }
 
     @PostMapping("/logout")
