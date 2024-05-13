@@ -51,10 +51,23 @@ public class MemberController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<?> my(@CookieValue(name = "jwt-token") String requestRefreshToken){
-        jwtService.parseJwtToken(requestRefreshToken);
+    public ResponseEntity<?> validateToken(@CookieValue(name = "jwt-token") String jwtToken) {
+        jwtService.parseJwtToken(jwtToken);
 
         return ResponseEntity.ok("");
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutMember() {
+
+        ResponseCookie responseCookie = ResponseCookie.from("jwt-token", "")
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
+    }
 }
