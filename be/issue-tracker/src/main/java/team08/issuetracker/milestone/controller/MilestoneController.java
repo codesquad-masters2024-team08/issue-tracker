@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import team08.issuetracker.milestone.model.Milestone;
 import team08.issuetracker.milestone.model.dto.MilestoneCountDto;
 import team08.issuetracker.milestone.model.dto.MilestoneCreationDto;
+import team08.issuetracker.milestone.model.dto.MilestoneUpdateDto;
 import team08.issuetracker.milestone.service.MilestoneService;
 
 @RestController
@@ -31,5 +32,10 @@ public class MilestoneController {
         return ResponseEntity.ok(milestoneCountDto);
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<String> updateMilestone(@PathVariable long id, @RequestBody MilestoneUpdateDto milestoneUpdateDto) {
+        Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
 
+        return ResponseEntity.ok("마일스톤 수정 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
+    }
 }
