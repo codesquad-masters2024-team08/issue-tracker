@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import team08.issuetracker.exception.member.InvalidRegisterFormException;
 import team08.issuetracker.exception.member.MemberNotFoundException;
 import team08.issuetracker.exception.member.MemberPasswordMismatchException;
+import team08.issuetracker.exception.milestone.InvalidMilestoneFormException;
 
 @ControllerAdvice
 @Slf4j
@@ -37,7 +38,12 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error_msg);
     }
 
-
+    @ExceptionHandler(InvalidMilestoneFormException.class)
+    public ResponseEntity<String> handleInvalidMilestoneFormException(InvalidMilestoneFormException e) {
+        error_msg = "마일스톤 생성 폼이 유효하지 않습니다.";
+        log.error(e.getClass().getSimpleName() + " : " + error_msg);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error_msg);
+    }
 
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException e) {
