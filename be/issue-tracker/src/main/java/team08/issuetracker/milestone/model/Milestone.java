@@ -2,6 +2,7 @@ package team08.issuetracker.milestone.model;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import team08.issuetracker.milestone.model.dto.MilestoneUpdateDto;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,14 @@ public class Milestone {
         this.name = name;
         this.description = description;
         this.completeDate = completeDate;
+    }
+
+    public Milestone update(MilestoneUpdateDto milestoneUpdateDto) {
+        this.name = milestoneUpdateDto.getName();
+        this.description = milestoneUpdateDto.getDescription();
+        this.completeDate = milestoneUpdateDto.getCompleteDate();
+
+        return this;
     }
 
 }
