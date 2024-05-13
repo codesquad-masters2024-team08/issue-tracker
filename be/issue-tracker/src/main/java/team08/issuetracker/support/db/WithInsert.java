@@ -1,4 +1,4 @@
-package team08.issuetracker.support;
+package team08.issuetracker.support.db;
 
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.transaction.annotation.Transactional;
