@@ -30,4 +30,10 @@ public class Milestone {
         return this;
     }
 
+    public Milestone updateOpenState(boolean isOpen) {
+        this.isOpen = isOpen;
+
+        return this;
+    }
+
 }

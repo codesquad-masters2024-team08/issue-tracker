@@ -38,6 +38,27 @@ public class MilestoneController {
     public ResponseEntity<String> updateMilestone(@PathVariable long id, @RequestBody MilestoneUpdateDto milestoneUpdateDto) {
         Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
 
+        log.debug("Milestone의 정보가 업데이트 되었습니다. ID : {}, Name : {}", milestone.getId(), milestone.getName());
+        
         return ResponseEntity.ok("마일스톤 수정 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
+
+    @PostMapping("/{id}/open")
+    public ResponseEntity<String> openMilestone(@PathVariable long id) {
+        Milestone milestone = milestoneService.openMilestone(id);
+
+        log.debug("Milestone Opened. ID : {}, Name : {}, Is_Open : {}", milestone.getId(), milestone.getName(), milestone.isOpen());
+
+        return ResponseEntity.ok("마일스톤 Open 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
+    }
+
+    @PostMapping("/{id}/close")
+    public ResponseEntity<String> closeMilestone(@PathVariable long id) {
+        Milestone milestone = milestoneService.closeMilestone(id);
+
+        log.debug("Milestone Closed. ID : {}, Name : {}, Is_Open : {}", milestone.getId(), milestone.getName(), milestone.isOpen());
+
+        return ResponseEntity.ok("마일스톤 Close 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
+    }
+
 }

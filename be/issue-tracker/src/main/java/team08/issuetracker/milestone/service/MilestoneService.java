@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import team08.issuetracker.exception.milestone.InvalidMilestoneFormException;
+import team08.issuetracker.exception.milestone.MilestoneAlreadyClosedException;
+import team08.issuetracker.exception.milestone.MilestoneAlreadyOpenedException;
 import team08.issuetracker.exception.milestone.MilestoneNotFoundException;
 import team08.issuetracker.milestone.model.Milestone;
 import team08.issuetracker.milestone.model.dto.MilestoneCountDto;
@@ -17,6 +19,9 @@ import team08.issuetracker.milestone.repository.MilestoneRepository;
 @RequiredArgsConstructor
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
+
+    private final boolean OPEN = true;
+    private final boolean CLOSE = false;
 
     public Milestone saveMilestone(MilestoneCreationDto milestoneCreationDto) {
         validateMilestoneForm(milestoneCreationDto.name());
@@ -43,6 +48,31 @@ public class MilestoneService {
 
         return milestoneRepository.save(milestone);
     }
+
+    public Milestone openMilestone(Long id) {
+        Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
+
+        if (milestone.isOpen()) {
+            throw new MilestoneAlreadyOpenedException();
+        }
+
+        milestone.updateOpenState(OPEN);
+
+        return milestoneRepository.save(milestone);
+    }
+
+    public Milestone closeMilestone(Long id) {
+        Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
+
+        if (!milestone.isOpen()) {
+            throw new MilestoneAlreadyClosedException();
+        }
+
+        milestone.updateOpenState(CLOSE);
+
+        return milestoneRepository.save(milestone);
+    }
+
 
     private void validateMilestoneForm(String milestoneName) {
         if (milestoneName == null || milestoneName.isEmpty()) {
