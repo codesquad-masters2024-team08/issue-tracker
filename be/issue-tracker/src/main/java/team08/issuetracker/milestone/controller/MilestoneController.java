@@ -34,7 +34,7 @@ public class MilestoneController {
         return ResponseEntity.ok(milestoneCountDto);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateMilestone(@PathVariable long id, @RequestBody MilestoneUpdateDto milestoneUpdateDto) {
         Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
 
@@ -43,7 +43,7 @@ public class MilestoneController {
         return ResponseEntity.ok("마일스톤 수정 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
-    @PostMapping("/{id}/open")
+    @PutMapping("/{id}/open")
     public ResponseEntity<String> openMilestone(@PathVariable long id) {
         Milestone milestone = milestoneService.openMilestone(id);
 
@@ -52,7 +52,7 @@ public class MilestoneController {
         return ResponseEntity.ok("마일스톤 Open 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
-    @PostMapping("/{id}/close")
+    @PutMapping("/{id}/close")
     public ResponseEntity<String> closeMilestone(@PathVariable long id) {
         Milestone milestone = milestoneService.closeMilestone(id);
 
