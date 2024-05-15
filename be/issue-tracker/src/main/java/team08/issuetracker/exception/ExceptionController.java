@@ -11,6 +11,8 @@ import team08.issuetracker.exception.member.InvalidRegisterFormException;
 import team08.issuetracker.exception.member.MemberNotFoundException;
 import team08.issuetracker.exception.member.MemberPasswordMismatchException;
 import team08.issuetracker.exception.milestone.InvalidMilestoneFormException;
+import team08.issuetracker.exception.milestone.MilestoneAlreadyClosedException;
+import team08.issuetracker.exception.milestone.MilestoneAlreadyOpenedException;
 import team08.issuetracker.exception.milestone.MilestoneNotFoundException;
 
 @ControllerAdvice
@@ -53,9 +55,22 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error_msg);
     }
 
+    @ExceptionHandler(MilestoneAlreadyOpenedException.class)
+    public ResponseEntity<String> handleMilestoneAlreadyOpenedException(MilestoneAlreadyOpenedException e) {
+        error_msg = "이미 Opened인 마일스톤의 상태를 Open 할 수 없습니다.";
+        log.error(e.getClass().getSimpleName() + " : " + error_msg);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error_msg);
+    }
+
+    @ExceptionHandler(MilestoneAlreadyClosedException.class)
+    public ResponseEntity<String> handleMilestoneAlreadyClosedException(MilestoneAlreadyClosedException e) {
+        error_msg = "이미 Closed인 마일스톤의 상태를 Close 할 수 없습니다.";
+        log.error(e.getClass().getSimpleName() + " : " + error_msg);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error_msg);
+    }
+
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException e) {
-
         error_msg = "이미 존재하는 ID로는 회원가입 할 수 없습니다.";
         log.error(e.getClass().getSimpleName() + " : " + error_msg);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error_msg);
