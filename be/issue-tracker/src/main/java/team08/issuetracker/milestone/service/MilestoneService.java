@@ -21,7 +21,7 @@ public class MilestoneService {
     public Milestone saveMilestone(MilestoneCreationDto milestoneCreationDto) {
         validateMilestoneForm(milestoneCreationDto);
 
-        Milestone milestone = new Milestone(milestoneCreationDto.getName(), milestoneCreationDto.getDescription(), milestoneCreationDto.getCompleteDate());
+        Milestone milestone = new Milestone(milestoneCreationDto.name(), milestoneCreationDto.description(), milestoneCreationDto.completeDate());
 
         log.debug("Milestone이 생성되었습니다. Name : {}", milestone.getName());
 
@@ -45,7 +45,7 @@ public class MilestoneService {
     }
 
     private void validateMilestoneForm(MilestoneCreationDto milestoneCreationDto) {
-        if (milestoneCreationDto.getName() == null || milestoneCreationDto.getName().isEmpty()) {
+        if (milestoneCreationDto.name() == null || milestoneCreationDto.name().isEmpty()) {
             throw new InvalidMilestoneFormException();
         }
     }

@@ -23,9 +23,9 @@ public class Milestone {
     }
 
     public Milestone update(MilestoneUpdateDto milestoneUpdateDto) {
-        this.name = milestoneUpdateDto.getName();
-        this.description = milestoneUpdateDto.getDescription();
-        this.completeDate = milestoneUpdateDto.getCompleteDate();
+        this.name = milestoneUpdateDto.name();
+        this.description = milestoneUpdateDto.description();
+        this.completeDate = milestoneUpdateDto.completeDate();
 
         return this;
     }
