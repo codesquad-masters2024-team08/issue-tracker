@@ -73,6 +73,12 @@ public class MilestoneService {
         return milestoneRepository.save(milestone);
     }
 
+    public void deleteMilestone(Long id) {
+        Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
+
+        milestoneRepository.delete(milestone);
+    }
+
 
     private void validateMilestoneForm(String milestoneName) {
         if (milestoneName == null || milestoneName.isEmpty()) {

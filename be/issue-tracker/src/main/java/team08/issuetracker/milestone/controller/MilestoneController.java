@@ -39,7 +39,7 @@ public class MilestoneController {
         Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
 
         log.debug("Milestone의 정보가 업데이트 되었습니다. ID : {}, Name : {}", milestone.getId(), milestone.getName());
-        
+
         return ResponseEntity.ok("마일스톤 수정 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
@@ -59,6 +59,13 @@ public class MilestoneController {
         log.debug("Milestone Closed. ID : {}, Name : {}, Is_Open : {}", milestone.getId(), milestone.getName(), milestone.isOpen());
 
         return ResponseEntity.ok("마일스톤 Close 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMilestone(@PathVariable long id) {
+        milestoneService.deleteMilestone(id);
+
+        return ResponseEntity.ok("마일스톤 삭제 성공!");
     }
 
 }
