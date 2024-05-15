@@ -18,6 +18,9 @@ import team08.issuetracker.milestone.service.MilestoneService;
 public class MilestoneController {
     private final MilestoneService milestoneService;
 
+    private final boolean OPEN = true;
+    private final boolean CLOSE = false;
+
     @PostMapping()
     public ResponseEntity<String> saveMilestone(@RequestBody MilestoneCreationDto milestoneCreationDto) {
         Milestone milestone = milestoneService.saveMilestone(milestoneCreationDto);
@@ -45,7 +48,7 @@ public class MilestoneController {
 
     @PutMapping("/{id}/open")
     public ResponseEntity<String> openMilestone(@PathVariable long id) {
-        Milestone milestone = milestoneService.openMilestone(id);
+        Milestone milestone = milestoneService.updateMilestoneState(id, OPEN);
 
         log.debug("Milestone Opened. ID : {}, Name : {}, Is_Open : {}", milestone.getId(), milestone.getName(), milestone.isOpen());
 
@@ -54,7 +57,7 @@ public class MilestoneController {
 
     @PutMapping("/{id}/close")
     public ResponseEntity<String> closeMilestone(@PathVariable long id) {
-        Milestone milestone = milestoneService.closeMilestone(id);
+        Milestone milestone = milestoneService.updateMilestoneState(id, CLOSE);
 
         log.debug("Milestone Closed. ID : {}, Name : {}, Is_Open : {}", milestone.getId(), milestone.getName(), milestone.isOpen());
 

@@ -20,9 +20,6 @@ import team08.issuetracker.milestone.repository.MilestoneRepository;
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
-    private final boolean OPEN = true;
-    private final boolean CLOSE = false;
-
     public Milestone saveMilestone(MilestoneCreationDto milestoneCreationDto) {
         validateMilestoneForm(milestoneCreationDto.name());
 
@@ -49,26 +46,14 @@ public class MilestoneService {
         return milestoneRepository.save(milestone);
     }
 
-    public Milestone openMilestone(Long id) {
+    public Milestone updateMilestoneState(Long id, boolean inputOpenState) {
         Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
 
-        if (milestone.isOpen()) {
-            throw new MilestoneAlreadyOpenedException();
-        }
+        boolean milestoneOpenState = milestone.isOpen();    // 마일스톤의 Opened 상태 저장
 
-        milestone.updateOpenState(OPEN);
+        validateMilestoneState(milestoneOpenState, inputOpenState);   // 현재 마일스톤 상태와, 바꾸고자 하는 상태 비교. 같다면 Exception 발생
 
-        return milestoneRepository.save(milestone);
-    }
-
-    public Milestone closeMilestone(Long id) {
-        Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
-
-        if (!milestone.isOpen()) {
-            throw new MilestoneAlreadyClosedException();
-        }
-
-        milestone.updateOpenState(CLOSE);
+        milestone.updateOpenState(inputOpenState);
 
         return milestoneRepository.save(milestone);
     }
@@ -79,6 +64,11 @@ public class MilestoneService {
         milestoneRepository.delete(milestone);
     }
 
+    private void validateMilestoneState(boolean milestoneOpenState, boolean inputOpenState) {
+        if (milestoneOpenState == inputOpenState) {
+            throw (milestoneOpenState) ? new MilestoneAlreadyOpenedException() : new MilestoneAlreadyClosedException();
+        }
+    }
 
     private void validateMilestoneForm(String milestoneName) {
         if (milestoneName == null || milestoneName.isEmpty()) {
