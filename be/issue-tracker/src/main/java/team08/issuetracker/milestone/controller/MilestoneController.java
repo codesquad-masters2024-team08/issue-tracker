@@ -22,6 +22,8 @@ public class MilestoneController {
     public ResponseEntity<String> saveMilestone(@RequestBody MilestoneCreationDto milestoneCreationDto) {
         Milestone milestone = milestoneService.saveMilestone(milestoneCreationDto);
 
+        log.debug("Milestone이 생성되었습니다. ID : {}, Name : {}", milestone.getId(), milestone.getName());
+
         return ResponseEntity.ok("마일스톤 생성 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 

@@ -19,11 +19,9 @@ public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public Milestone saveMilestone(MilestoneCreationDto milestoneCreationDto) {
-        validateMilestoneForm(milestoneCreationDto);
+        validateMilestoneForm(milestoneCreationDto.name());
 
         Milestone milestone = new Milestone(milestoneCreationDto.name(), milestoneCreationDto.description(), milestoneCreationDto.completeDate());
-
-        log.debug("Milestone이 생성되었습니다. Name : {}", milestone.getName());
 
         return milestoneRepository.save(milestone);
     }
@@ -37,6 +35,8 @@ public class MilestoneService {
     }
 
     public Milestone updateMilestone(Long id, MilestoneUpdateDto milestoneUpdateDto) {
+        validateMilestoneForm(milestoneUpdateDto.name());
+
         Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
 
         milestone.update(milestoneUpdateDto);
@@ -44,8 +44,8 @@ public class MilestoneService {
         return milestoneRepository.save(milestone);
     }
 
-    private void validateMilestoneForm(MilestoneCreationDto milestoneCreationDto) {
-        if (milestoneCreationDto.name() == null || milestoneCreationDto.name().isEmpty()) {
+    private void validateMilestoneForm(String milestoneName) {
+        if (milestoneName == null || milestoneName.isEmpty()) {
             throw new InvalidMilestoneFormException();
         }
     }
