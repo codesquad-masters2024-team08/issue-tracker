@@ -21,14 +21,9 @@ public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public MilestoneResponse getAllOpenedMilestonesWithCounts() {
+        MilestoneCountDto milestoneCounts = getMilestoneCountDto();
 
-        MilestoneCountDto milestoneCounts = new MilestoneCountDto(    // 마일스톤 총 개수, 열린 개수, 닫힌 개수
-                milestoneRepository.count(),
-                milestoneRepository.countOpenedMilestones(),
-                milestoneRepository.countClosedMilestones()
-        );
-
-        List<MilestoneDto> milestones = milestoneRepository.getAllOpenedMilestone().stream() // 마일스톤 목록
+        List<MilestoneDto> milestones = milestoneRepository.getAllOpenedMilestone().stream() // 열린 마일스톤 목록
                 .map(milestone -> new MilestoneDto(
                         milestone.getId(),
                         milestone.getName(),
@@ -45,14 +40,9 @@ public class MilestoneService {
     }
 
     public MilestoneResponse getAllClosedMilestonesWithCounts() {
+        MilestoneCountDto milestoneCounts = getMilestoneCountDto();
 
-        MilestoneCountDto milestoneCounts = new MilestoneCountDto(    // 마일스톤 총 개수, 열린 개수, 닫힌 개수
-                milestoneRepository.count(),
-                milestoneRepository.countOpenedMilestones(),
-                milestoneRepository.countClosedMilestones()
-        );
-
-        List<MilestoneDto> milestones = milestoneRepository.getAllClosedMilestone().stream() // 마일스톤 목록
+        List<MilestoneDto> milestones = milestoneRepository.getAllClosedMilestone().stream() // 닫힌 마일스톤 목록
                 .map(milestone -> new MilestoneDto(
                         milestone.getId(),
                         milestone.getName(),
@@ -74,14 +64,6 @@ public class MilestoneService {
         Milestone milestone = new Milestone(milestoneCreationDto.name(), milestoneCreationDto.description(), milestoneCreationDto.completeDate());
 
         return milestoneRepository.save(milestone);
-    }
-
-    public MilestoneCountDto getMilestoneCount() {
-        long totalCount = milestoneRepository.count();
-        long openedCount = milestoneRepository.countOpenedMilestones();
-        long closedCount = milestoneRepository.countClosedMilestones();
-
-        return new MilestoneCountDto(totalCount, openedCount, closedCount);
     }
 
     public Milestone updateMilestone(Long id, MilestoneUpdateDto milestoneUpdateDto) {
@@ -110,6 +92,14 @@ public class MilestoneService {
         Milestone milestone = milestoneRepository.findById(id).orElseThrow(MilestoneNotFoundException::new);
 
         milestoneRepository.delete(milestone);
+    }
+
+    private MilestoneCountDto getMilestoneCountDto() {
+        return new MilestoneCountDto(    // 마일스톤 총 개수, 열린 개수, 닫힌 개수
+                milestoneRepository.count(),
+                milestoneRepository.countOpenedMilestones(),
+                milestoneRepository.countClosedMilestones()
+        );
     }
 
     private void validateMilestoneState(boolean milestoneOpenState, boolean inputOpenState) {

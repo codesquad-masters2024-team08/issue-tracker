@@ -49,13 +49,6 @@ public class MilestoneController {
         return ResponseEntity.ok("마일스톤 생성 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<MilestoneCountDto> getMilestoneCount() {
-        MilestoneCountDto milestoneCountDto = milestoneService.getMilestoneCount();
-
-        return ResponseEntity.ok(milestoneCountDto);
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateMilestone(@PathVariable long id, @RequestBody MilestoneUpdateDto milestoneUpdateDto) {
         Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
