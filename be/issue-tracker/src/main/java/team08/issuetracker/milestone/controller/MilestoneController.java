@@ -45,7 +45,7 @@ public class MilestoneController {
         return ResponseEntity.ok(milestoneCountDto);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> updateMilestone(@PathVariable long id, @RequestBody MilestoneUpdateDto milestoneUpdateDto) {
         Milestone milestone = milestoneService.updateMilestone(id, milestoneUpdateDto);
 
@@ -54,7 +54,7 @@ public class MilestoneController {
         return ResponseEntity.ok("마일스톤 수정 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
-    @PutMapping("/{id}/open")
+    @PatchMapping("/{id}/open")
     public ResponseEntity<String> openMilestone(@PathVariable long id) {
         Milestone milestone = milestoneService.updateMilestoneState(id, OPEN);
 
@@ -63,7 +63,7 @@ public class MilestoneController {
         return ResponseEntity.ok("마일스톤 Open 성공! 마일스톤 #" + milestone.getId() + " 이름 : " + milestone.getName());
     }
 
-    @PutMapping("/{id}/close")
+    @PatchMapping("/{id}/close")
     public ResponseEntity<String> closeMilestone(@PathVariable long id) {
         Milestone milestone = milestoneService.updateMilestoneState(id, CLOSE);
 
