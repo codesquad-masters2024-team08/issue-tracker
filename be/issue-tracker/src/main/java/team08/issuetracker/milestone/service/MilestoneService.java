@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
-    public MilestoneResponse getAllMilestonesWithCounts() {
+
+    public MilestoneResponse getAllOpenedMilestonesWithCounts() {
 
         MilestoneCountDto milestoneCounts = new MilestoneCountDto(    // 마일스톤 총 개수, 열린 개수, 닫힌 개수
                 milestoneRepository.count(),
@@ -27,7 +28,31 @@ public class MilestoneService {
                 milestoneRepository.countClosedMilestones()
         );
 
-        List<MilestoneDto> milestones = milestoneRepository.findAll().stream() // 마일스톤 목록
+        List<MilestoneDto> milestones = milestoneRepository.getAllOpenedMilestone().stream() // 마일스톤 목록
+                .map(milestone -> new MilestoneDto(
+                        milestone.getId(),
+                        milestone.getName(),
+                        milestone.getCompleteDate(),
+                        milestone.getDescription()))
+                /* TODO : 마일스톤과 이슈간의 연관된 정보 추가하기
+                1) openedIssueCount : 마일스톤에 해당하는 열린 이슈 개수 [long]
+                2) closedIssueCount : 마일스톤에 해당하는 닫힌 이슈 개수 [long]
+                3) milestoneProgress : 마일스톤 진행도 [double]
+                 */
+                .collect(Collectors.toList());
+
+        return new MilestoneResponse(milestoneCounts, milestones);
+    }
+
+    public MilestoneResponse getAllClosedMilestonesWithCounts() {
+
+        MilestoneCountDto milestoneCounts = new MilestoneCountDto(    // 마일스톤 총 개수, 열린 개수, 닫힌 개수
+                milestoneRepository.count(),
+                milestoneRepository.countOpenedMilestones(),
+                milestoneRepository.countClosedMilestones()
+        );
+
+        List<MilestoneDto> milestones = milestoneRepository.getAllClosedMilestone().stream() // 마일스톤 목록
                 .map(milestone -> new MilestoneDto(
                         milestone.getId(),
                         milestone.getName(),

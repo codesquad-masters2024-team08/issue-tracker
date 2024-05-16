@@ -2,6 +2,7 @@ package team08.issuetracker.milestone.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team08.issuetracker.milestone.model.Milestone;
@@ -21,12 +22,22 @@ public class MilestoneController {
 
     private final boolean OPEN = true;
     private final boolean CLOSE = false;
+    private final String OPEN_STATE = "opened";
+    private final String CLOSE_STATE = "closed";
 
     @GetMapping()
-    public ResponseEntity<MilestoneResponse> getAllMilestonesWithCounts() {
-        MilestoneResponse milestoneResponse = milestoneService.getAllMilestonesWithCounts();
+    public ResponseEntity<?> getAllMilestonesWithCounts(@RequestParam(required = false, value = "state") String state) {
+        if (state == null || state.equals(OPEN_STATE)) {
+            MilestoneResponse milestoneResponse = milestoneService.getAllOpenedMilestonesWithCounts();
+            return ResponseEntity.ok(milestoneResponse);
+        }
 
-        return ResponseEntity.ok(milestoneResponse);
+        if (state.equals(CLOSE_STATE)) {
+            MilestoneResponse milestoneResponse = milestoneService.getAllClosedMilestonesWithCounts();
+            return ResponseEntity.ok(milestoneResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("올바르지 않은 URL 쿼리입니다.");
     }
 
     @PostMapping()
