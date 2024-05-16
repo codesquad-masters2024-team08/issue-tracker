@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import team08.issuetracker.milestone.model.Milestone;
 import team08.issuetracker.milestone.model.dto.MilestoneCountDto;
 import team08.issuetracker.milestone.model.dto.MilestoneCreationDto;
+import team08.issuetracker.milestone.model.dto.MilestoneResponse;
 import team08.issuetracker.milestone.model.dto.MilestoneUpdateDto;
 import team08.issuetracker.milestone.service.MilestoneService;
 
@@ -20,6 +21,13 @@ public class MilestoneController {
 
     private final boolean OPEN = true;
     private final boolean CLOSE = false;
+
+    @GetMapping()
+    public ResponseEntity<MilestoneResponse> getAllMilestonesWithCounts() {
+        MilestoneResponse milestoneResponse = milestoneService.getAllMilestonesWithCounts();
+
+        return ResponseEntity.ok(milestoneResponse);
+    }
 
     @PostMapping()
     public ResponseEntity<String> saveMilestone(@RequestBody MilestoneCreationDto milestoneCreationDto) {
