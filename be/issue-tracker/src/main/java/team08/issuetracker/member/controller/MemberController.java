@@ -1,18 +1,14 @@
 package team08.issuetracker.member.controller;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import team08.issuetracker.jwt.JwtService;
 import team08.issuetracker.member.model.Member;
-import team08.issuetracker.member.model.MemberResponse;
 import team08.issuetracker.member.model.dto.MemberCreationDto;
 import team08.issuetracker.member.model.dto.MemberLoginDto;
+import team08.issuetracker.member.service.CookieService;
 import team08.issuetracker.member.service.MemberService;
 
 @RestController
@@ -23,8 +19,8 @@ import team08.issuetracker.member.service.MemberService;
 public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
+    private final CookieService cookieService;
 
-    private static final long TOKEN_DURATION_90DAYS = 90 * 24 * 60 * 60;
     private static final String TOKEN_NAME = "jwt-token";
     private static final String TOKEN_HEADER_VALUE = "Bearer ";
 
@@ -35,25 +31,22 @@ public class MemberController {
         return ResponseEntity.ok("회원가입 성공!");
     }
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<?> loginMember(@RequestBody MemberLoginDto memberLoginDto) {
         Member member = memberService.loginMember(memberLoginDto);
 
-        MemberResponse response = new MemberResponse(member.getMemberId(), jwtService.createJwtToken(member));
+        String token = jwtService.createJwtToken(member);
 
-        HttpCookie httpCookie = ResponseCookie.from(TOKEN_NAME, response.getToken())
-                .maxAge(TOKEN_DURATION_90DAYS)
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .build();
+        HttpCookie cookie = cookieService.createCookie(token);
 
-        log.debug("로그인 성공! : {}", response.getMemberId());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION, TOKEN_HEADER_VALUE + token);
+        headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
-                .header(HttpHeaders.AUTHORIZATION, TOKEN_HEADER_VALUE + response.getToken())
-                .build();
+                .headers(headers)
+                .body("로그인 성공!");
     }
 
     @GetMapping("/validate")
@@ -78,4 +71,5 @@ public class MemberController {
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
     }
+
 }
