@@ -19,7 +19,7 @@ import team08.issuetracker.member.service.MemberService;
 @Slf4j
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", exposedHeaders = {"Authorization", "Set-Cookie"})
 public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
@@ -44,7 +44,7 @@ public class MemberController {
         HttpCookie httpCookie = ResponseCookie.from(TOKEN_NAME, response.getToken())
                 .maxAge(TOKEN_DURATION_90DAYS)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .build();
 
