@@ -1,6 +1,5 @@
 package team08.issuetracker.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,5 +16,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true); // 자격 증명 허용
 
     }
-}                                                                                                                      16,57All
+}
 
