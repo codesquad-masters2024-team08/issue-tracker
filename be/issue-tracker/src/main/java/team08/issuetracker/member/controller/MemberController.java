@@ -48,6 +48,8 @@ public class MemberController {
                 .path("/")
                 .build();
 
+        log.debug("로그인 성공! : {}", response.getMemberId());
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
                 .header(HttpHeaders.AUTHORIZATION, TOKEN_HEADER_VALUE + response.getToken())
