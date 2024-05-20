@@ -19,7 +19,7 @@ import team08.issuetracker.member.service.MemberService;
 @Slf4j
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", exposedHeaders = {"Authorization", "Set-Cookie"})
+@CrossOrigin(exposedHeaders = {"Authorization", "Set-Cookie"})
 public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
