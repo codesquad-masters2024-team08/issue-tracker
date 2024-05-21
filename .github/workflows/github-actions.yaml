@@ -65,4 +65,3 @@ jobs:
             fi
             # 새로운 컨테이너 실행
               sudo docker run -d -p 8080:8080 --name spring-server ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }}
-            sudo docker image prune -f

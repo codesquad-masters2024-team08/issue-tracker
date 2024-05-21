@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1cb90075-339e-49d3-898b-ef316cd4d2b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/github-actions.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/github-actions.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716295553631</updated>
-      <workItem from="1716295554786" duration="2400000" />
+      <workItem from="1716295554786" duration="2929000" />
     </task>
     <servers />
   </component>
