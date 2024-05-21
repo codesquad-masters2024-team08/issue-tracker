@@ -31,7 +31,6 @@ public class MemberController {
         return ResponseEntity.ok("회원가입 성공!");
     }
 
-    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<?> loginMember(@RequestBody MemberLoginDto memberLoginDto) {
         Member member = memberService.loginMember(memberLoginDto);

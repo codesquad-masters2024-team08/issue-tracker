@@ -20,6 +20,9 @@ public class MilestoneDetailDto {
         this.name = name;
         this.completeDate = completeDate;
         this.description = description;
+        this.openedIssueCount = 10;
+        this.closedIssueCount = 10;
+        this.milestoneProgress = 50.0;
     }
 
     public static MilestoneDetailDto from(Milestone milestone) {

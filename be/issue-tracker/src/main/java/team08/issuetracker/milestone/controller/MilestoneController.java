@@ -15,7 +15,6 @@ import team08.issuetracker.milestone.service.MilestoneService;
 @Slf4j
 @RequestMapping("/milestone")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class MilestoneController {
     private final MilestoneService milestoneService;
 
