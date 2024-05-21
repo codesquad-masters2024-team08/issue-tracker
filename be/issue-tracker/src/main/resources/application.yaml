@@ -27,7 +27,7 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/issue_tracker?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://3.34.178.33:3306/issue_tracker?useSSL=false&serverTimezone=UTC
     username: admin
     password: admin
 ---
