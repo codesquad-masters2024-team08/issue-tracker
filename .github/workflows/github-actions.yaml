@@ -1,5 +1,6 @@
 name: Deploy Spring Application to Ec2
 
+# feat/member에 대한 브랜치 push가 수행되었을 때 동작
 on:
   push:
     branches: [ "feat/member" ]
