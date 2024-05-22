@@ -22,7 +22,7 @@ public class MilestoneDetailDto {
         this.description = description;
         this.openedIssueCount = 10;
         this.closedIssueCount = 10;
-        this.milestoneProgress = 50.0;
+        this.milestoneProgress = 70.0;
     }
 
     public static MilestoneDetailDto from(Milestone milestone) {
